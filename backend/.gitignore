@@ -1,0 +1,9 @@
+# Local files/directories
+/local
+
+# Local configuaration
+/config.yaml
+
+# IDE configuration
+/.idea
+/.vscode

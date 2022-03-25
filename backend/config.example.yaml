@@ -1,0 +1,39 @@
+# Environment type:
+#  - 0 = development
+#  - 1 = production
+environment: 0
+
+# Log level:
+#  - See https://pkg.go.dev/github.com/sirupsen/logrus@v1.8.1#Level
+loglevel: 6
+
+# HTTP binding address
+address: :8081
+
+# HTTP Server header
+serverheader: bsthun-dnstracker-dev1
+
+# Allowed cross-origin addresses (array)
+cors:
+  - http://localhost:3001
+
+# JWT secret
+jwtsecret: 08h4CrYdc8CkXDOH0WCYu0gWSN9wVyLV
+
+# Redis connection
+redisaddress: localhost:6379
+redispassword:
+redisdb: 0
+
+# DNS service configuration
+dnsauthority: localhost
+dnsresolvetimeout: 1 # second(s)
+dnsresolvetires: 3 # time(s)
+dnsupstreams:
+  - proto: udp
+    address: 8.8.8.8
+  - proto: udp
+    address: 8.8.4.4
+
+# ECS configurations
+ecsallownonglobalip: false
