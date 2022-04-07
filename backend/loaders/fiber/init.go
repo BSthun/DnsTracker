@@ -3,14 +3,15 @@ package fiber
 import (
 	"time"
 
+	"github.com/gofiber/adaptor/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 
 	"backend/endpoints/api"
 	"backend/endpoints/dns"
 	"backend/loaders/fiber/middlewares"
+	"backend/loaders/socketio"
 	"backend/types/responder"
-
 	"backend/utils/config"
 	"backend/utils/logger"
 )
@@ -41,9 +42,9 @@ func Init() {
 	apiGroup := app.Group("api/")
 
 	// Apply middlewares to API router
+	app.Use(middlewares.Cors)
+	app.Use(middlewares.Recover)
 	apiGroup.Use(middlewares.Limiter)
-	apiGroup.Use(middlewares.Cors)
-	apiGroup.Use(middlewares.Recover)
 
 	// Apply endpoints to API router
 	api.Init(apiGroup)
@@ -53,6 +54,8 @@ func Init() {
 
 	// Apply endpoints to API router
 	dns.Init(dnsGroup)
+
+	app.All("socket.io/", adaptor.HTTPHandlerFunc(socketio.Server.ServeHTTP))
 
 	// Register not found handler
 	app.Use(notfoundHandler)

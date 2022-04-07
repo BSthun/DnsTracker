@@ -1,0 +1,13 @@
+# Logs
+logs
+*.log
+
+# Dependencies
+node_modules
+dist
+*.local
+
+# Editor directories and files
+/.idea
+/.vscode/*
+/!.vscode/extensions.json

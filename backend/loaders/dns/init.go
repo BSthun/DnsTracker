@@ -4,8 +4,10 @@ import (
 	"time"
 
 	"github.com/miekg/dns"
+	"github.com/sirupsen/logrus"
 
 	"backend/utils/config"
+	"backend/utils/logger"
 )
 
 var UdpClient *dns.Client
@@ -25,4 +27,6 @@ func Init() {
 		UDPSize: dns.DefaultMsgSize,
 		Timeout: timeout,
 	}
+
+	logger.Log(logrus.Info, "LOADED DNS CLIENT SERVICE")
 }

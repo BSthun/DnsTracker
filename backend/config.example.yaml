@@ -9,6 +9,7 @@ loglevel: 6
 
 # HTTP binding address
 address: :8081
+socketioaddress: 8082
 
 # HTTP Server header
 serverheader: bsthun-dnstracker-dev1
