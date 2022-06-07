@@ -6,10 +6,12 @@ type config struct {
 	Environment enum.Environment
 	LogLevel    uint32
 
-	Address         string
-	SocketioAddress string
-	ServerHeader    string
-	Cors            []string
+	BackendUrl   string
+	WebSocketUrl string
+
+	Address      string
+	ServerHeader string
+	Cors         []string
 
 	JwtSecret string
 

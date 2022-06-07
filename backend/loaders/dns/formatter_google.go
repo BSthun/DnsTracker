@@ -58,13 +58,13 @@ func GoogleRequestFormatter(record *Record, ctx *fiber.Ctx) *Error {
 	msg.CheckingDisabled = cd
 	msg.Extra = append(msg.Extra, opt)
 
-	record.request = msg
-	record.isTailored = edns == nil
+	record.Request = msg
+	record.IsTailored = edns == nil
 	return nil
 }
 
 func GoogleResponseFormatter(req *Record, ctx *fiber.Ctx) error {
-	respJSON := jsondns.Marshal(req.response)
+	respJSON := jsondns.Marshal(req.Response)
 	now := time.Now().UTC().Format(http.TimeFormat)
 
 	ctx.Set("Content-Type", "application/json; charset=UTF-8")
@@ -73,7 +73,7 @@ func GoogleResponseFormatter(req *Record, ctx *fiber.Ctx) error {
 	ctx.Set("Vary", "Accept")
 
 	if respJSON.HaveTTL {
-		if req.isTailored {
+		if req.IsTailored {
 			ctx.Set("Cache-Control", "private, max-age="+strconv.FormatUint(uint64(respJSON.LeastTTL), 10))
 		} else {
 			ctx.Set("Cache-Control", "public, max-age="+strconv.FormatUint(uint64(respJSON.LeastTTL), 10))

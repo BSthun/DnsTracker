@@ -3,7 +3,7 @@ import {
 	Stack,
 } from '@mui/material';
 import Navbar from './components/navbar/index.jsx';
-import Tracker from './tracker/Tracker.jsx';
+import Tracker from './pages/tracker/Tracker.jsx';
 import React from 'react';
 import {
 	BrowserRouter,

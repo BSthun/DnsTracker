@@ -9,6 +9,7 @@ import (
 func notfoundHandler(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusNotFound).JSON(responder.ErrorResponse{
 		Success: false,
-		Error:   "404_NOT_FOUND",
+		Message: "Endpoint Not Found",
+		Code:    "NOT_FOUND",
 	})
 }

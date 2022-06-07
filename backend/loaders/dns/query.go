@@ -16,7 +16,7 @@ func Query(record *Record) *Error {
 
 	for i := int64(0); i < config.C.DnsResolveTires; i++ {
 		upstream := config.C.DnsUpstreams[rand.Intn(numUpstreams)]
-		record.currentUpstream = upstream.Address
+		record.CurrentUpstream = upstream.Address
 
 		switch upstream.Proto {
 		default:
@@ -25,10 +25,10 @@ func Query(record *Record) *Error {
 				Message: "Invalid upstream protocol type",
 			}
 		case "tcp":
-			record.response, _, err = TcpClient.ExchangeContext(ctx, record.request, upstream.Address)
+			record.Response, _, err = TcpClient.ExchangeContext(ctx, record.Request, upstream.Address)
 		case "udp":
-			record.response, _, err = UdpClient.ExchangeContext(ctx, record.request, upstream.Address)
-			// TODO: IXFR request and TCP fallback
+			record.Response, _, err = UdpClient.ExchangeContext(ctx, record.Request, upstream.Address)
+			// TODO: IX-FR request and TCP fallback
 		}
 
 		if err == nil {

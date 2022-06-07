@@ -6,7 +6,6 @@ import (
 
 	"backend/loaders/dns"
 	"backend/loaders/fiber"
-	"backend/loaders/socketio"
 )
 
 func main() {
@@ -16,6 +15,5 @@ func main() {
 	// redis.Init()
 
 	dns.Init()
-	socketio.Init()
 	fiber.Init()
 }

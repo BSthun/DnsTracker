@@ -10,7 +10,7 @@ import React from 'react';
 
 const Navbar = () => {
 	return (
-		<Paper square elevation={4} sx={{ position: 'fixed', inset: 'auto 0' }}>
+		<Paper square elevation={0} sx={{ position: 'fixed', inset: 'auto 0', zIndex: 30000, boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)" }}>
 			<Container maxWidth="xl">
 				<Stack height={64} flexDirection="row" alignItems="center" justifyContent="space-between">
 					<Box display="flex" alignItems="center" gap={2}>

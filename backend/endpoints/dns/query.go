@@ -6,10 +6,11 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
+	"backend/instances/models"
 	"backend/loaders/dns"
 )
 
-func QueryHandler(ctx *fiber.Ctx) error {
+func queryHandler(ctx *fiber.Ctx) error {
 	// Retrieve content type
 	contentType := ctx.Get("Content-Type")
 	if ct := ctx.FormValue("ct"); ct != "" {
@@ -54,10 +55,8 @@ func QueryHandler(ctx *fiber.Ctx) error {
 	err := new(dns.Error)
 	if contentType == "application/dns-json" {
 		err = dns.GoogleRequestFormatter(req, ctx)
-	} else if contentType == "application/dns-message" {
-		// TODO: IETF formatter
-	} else if contentType == "application/dns-udpwireformat" {
-		// TODO: IETF formatter
+	} else if contentType == "application/dns-message" || contentType == "application/dns-udpwireformat" {
+		err = dns.IetfRequestFormatter(req, ctx)
 	} else {
 		return ctx.Status(fiber.StatusUnsupportedMediaType).SendString(fmt.Sprintf("Invalid argument value: \"ct\" = %q", contentType))
 	}
@@ -67,10 +66,16 @@ func QueryHandler(ctx *fiber.Ctx) error {
 		return ctx.Status(err.Code).SendString(err.Message)
 	}
 
+	// Log dns answer
+	if ctx.Locals("channel") != nil {
+		log(ctx.Locals("channel").(*models.Channel), req)
+	}
+
+	// Response dns answer
 	if responseType == "application/json" {
 		return dns.GoogleResponseFormatter(req, ctx)
 	} else if responseType == "application/dns-message" {
-		// TODO: IETF formatter
+		return dns.IetfResponseFormatter(req, ctx)
 	}
 	return ctx.Status(fiber.StatusInternalServerError).SendString("Unknown response Content-Type")
 }
